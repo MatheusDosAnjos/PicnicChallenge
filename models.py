@@ -37,3 +37,7 @@ class Ticket(BaseModel):
     created_at: datetime
     comment: SummaryComment
     comments: list[DetailedComment]
+
+
+class TicketData(BaseModel):
+    tickets: list[Ticket]
