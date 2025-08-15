@@ -1,6 +1,7 @@
 from collections import Counter
 
 from models import Ticket, TicketCategory
+from categorizer import get_most_recent_tickets, get_oldest_tickets
 
 
 def display_summary(categorized_tickets: dict[TicketCategory, list[Ticket]]):
@@ -24,6 +25,8 @@ def display_menu(category_map: dict[int, TicketCategory]):
 
     print("\n Other options:")
     print("  U. Users with the most tickets")
+    print("  O. 10 oldest tickets")
+    print("  R. 10 most recent tickets")
     print("---------------------------------------------")
 
 
@@ -70,5 +73,11 @@ def start_shell(
             display_tickets(tickets_to_show, f"{selected_category.value}'")
         elif choice == "U":
             display_top_users(all_tickets)
+        elif choice == "O":
+            recent_tickets = get_oldest_tickets(all_tickets)
+            display_tickets(recent_tickets, "10 oldest tickets")
+        elif choice == "R":
+            recent_tickets = get_most_recent_tickets(all_tickets)
+            display_tickets(recent_tickets, "10 most recent tickets")
         else:
             print("\nInvalid option, try again!")

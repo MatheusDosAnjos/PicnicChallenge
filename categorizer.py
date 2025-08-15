@@ -76,3 +76,13 @@ def group_tickets_by_category(
         categorized_tickets[category].append(ticket)
 
     return categorized_tickets
+
+
+def get_most_recent_tickets(all_tickets: list[Ticket], limit: int = 10) -> list[Ticket]:
+    """Returns a list of the most recent tickets."""
+    return sorted(all_tickets, key=lambda t: t.created_at, reverse=True)[:limit]
+
+
+def get_oldest_tickets(all_tickets: list[Ticket], limit: int = 10) -> list[Ticket]:
+    """Returns a list of the oldest tickets."""
+    return sorted(all_tickets, key=lambda t: t.created_at)[:limit]
