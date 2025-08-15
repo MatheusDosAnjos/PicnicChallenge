@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from models import Ticket, TicketCategory
 
 category_keywords = {
@@ -61,3 +63,16 @@ def categorize_ticket(ticket: Ticket) -> TicketCategory:
             return category
 
     return TicketCategory.OTHER
+
+
+def group_tickets_by_category(
+    all_tickets: list[Ticket],
+) -> dict[TicketCategory, list[Ticket]]:
+    """Groups a list of tickets into a dictionary by category."""
+    categorized_tickets = defaultdict(list)
+
+    for ticket in all_tickets:
+        category = categorize_ticket(ticket)
+        categorized_tickets[category].append(ticket)
+
+    return categorized_tickets
