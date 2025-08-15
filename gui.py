@@ -1,3 +1,5 @@
+from collections import Counter
+
 from models import Ticket, TicketCategory
 
 
@@ -20,6 +22,10 @@ def display_menu(category_map: dict[int, TicketCategory]):
     for index, category in category_map.items():
         print(f"  {index}. {category.value}")
 
+    print("\n Other options:")
+    print("  U. Users with the most tickets")
+    print("---------------------------------------------")
+
 
 def display_tickets(tickets: list[Ticket], title: str):
     """Displays a formatted list of tickets."""
@@ -34,6 +40,16 @@ def display_tickets(tickets: list[Ticket], title: str):
         print(
             f"     Requester: {ticket.requester.name} | Created at: {ticket.created_at.strftime('%Y-%m-%d %H:%M')}"
         )
+
+
+def display_top_users(all_tickets: list[Ticket], limit: int = 5) -> None:
+    """Displays a formatted list of users with the most tickets opened."""
+
+    print("\n--- Users with the most tickets opened ---")
+    user_counts = Counter(ticket.requester.name for ticket in all_tickets)
+
+    for i, (user, count) in enumerate(user_counts.most_common(limit), 1):
+        print(f"  {i}. {user}: {count} tickets")
 
 
 def start_shell(
@@ -52,5 +68,7 @@ def start_shell(
             selected_category = category_map[int(choice)]
             tickets_to_show = categorized_tickets.get(selected_category, [])
             display_tickets(tickets_to_show, f"{selected_category.value}'")
+        elif choice == "U":
+            display_top_users(all_tickets)
         else:
             print("\nInvalid option, try again!")
