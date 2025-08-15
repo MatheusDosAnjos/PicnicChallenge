@@ -1,6 +1,18 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from enum import Enum
+
+
+class TicketCategory(Enum):
+    AUTHENTICATION = "Authentication issues"
+    PAYMENT = "Payment issues"
+    PROMOTIONS = "Promotional issues"
+    RETURNS = "Returns and exchanges"
+    PRODUCT_QUALITY = "Product quality and incorrect shipments"
+    SHIPPING_TRACKING = "Shipping and tracking issues"
+    ORDER_MODIFICATION = "Order modifications and cancellations"
+    OTHER = "Other"
 
 
 class Requester(BaseModel):
